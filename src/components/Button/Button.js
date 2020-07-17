@@ -4,7 +4,7 @@ import "./Button.css"
 
 function Button(props) {
 
-    return (<div className="button">AC</div>)
+    return (<div className={`button ${props.type} ${props.name == "0" ? "zero" : ""}`}>{props.name}</div>)
 }
 
 
