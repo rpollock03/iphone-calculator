@@ -1,13 +1,19 @@
 .App{
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:50px;
     width:562px;
     height:1218px;
     background:black;
     color:white;
     border-radius:50px;
     padding:20px;
+    position:relative;
 }
 
 .top{
+    display:flex;
+    justify-content:space-between;
 height:250px;
 padding:0 20px;
 }
@@ -27,3 +33,14 @@ grid-template-rows: repeat(5, 1fr);
 grid-template-columns: repeat(4,1fr);
 }
 
+
+.bottom{
+    position:absolute;
+    width:200px;
+    height:5px;
+    background:white;
+    bottom:10px;
+    left:50%;
+    border-radius:4px;
+    transform:translateX(-50%);
+}
