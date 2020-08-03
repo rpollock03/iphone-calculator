@@ -10,6 +10,10 @@
     cursor:pointer;
 }
 
+.button:active, .button.focus{
+
+}
+
 .button.zero{
     width:250px;
     grid-column: 1 / span 2;

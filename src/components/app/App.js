@@ -1,9 +1,10 @@
 import React, { useState } from "react"
 
+
+import commafy from "../util/commafy"
 import Button from "../Button/Button";
 import "./App.css"
 import icons from "../../icons.png"
-import { getAllByPlaceholderText } from "@testing-library/react";
 
 function App() {
     const [time, setTime] = useState(new Date())
@@ -112,7 +113,7 @@ function App() {
                     <img src={icons} alt="" />
                 </div>
             </div>
-            <div className="display">{value}</div>
+            <div className="display">{commafy(value)}</div>
             <div className="buttons">
                 <Button name="AC" type="function" handleClick={handleClick} />
                 <Button name="±" type="function" handleClick={handleClick} />
