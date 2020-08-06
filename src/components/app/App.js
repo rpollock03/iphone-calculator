@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 
 
 import commafy from "../util/commafy"
@@ -13,41 +13,57 @@ function App() {
     const [operator, setOperator] = useState(null)
 
 
+    useEffect(() => {
+        let newTime = new Date()
+        let newMins = newTime.getMinutes()
+        if (newMins !== time.getMinutes()) {
+            setTime(new Date())
+        }
+    })
+
+
     function handleClick(key) {
         // convert string display value to number
         const num = parseFloat(value)
         const operators = ["+", "÷", "×", "–"]
 
         // if AC button pressed
-        if (key == "AC") {
+        if (key === "AC") {
             setMemory(null)
             setValue("0")
             setOperator(null)
             return;
         }
 
+        if (key === "C") {
+            setValue("0")
+            return;
+        }
+
         // if ± button pressed
-        if (key == "±") {
-            setValue((num * -1).toString());
+        if (key === "+/–") {
+            if (value == "0") {
+                setValue("-0")
+            } else setValue((num * -1).toString());
             return;
         }
 
         // if % button pressed
-        if (key == "%") {
+        if (key === "%") {
             setValue((num / 100).toString())
             setOperator(null)
             return;
         }
 
         // if decimal point pressed
-        if (key == ".") {
+        if (key === ".") {
             // make sure theres a number before the decimal point.
-            if (value == "0") {
+            if (value === "0") {
                 setValue("0.")
                 return;
             }
             //only one decimal point in a number
-            if (value.indexOf(key) > -1) {
+            if (value.includes(key)) {
                 return;
             }
             //otherwise append decimal point
@@ -55,18 +71,18 @@ function App() {
         }
 
         // if button pressed is an operator
-        if (operators.indexOf(key) > -1) {
+        if (operators.includes(key)) {
             if (operator) {
-                if (operator == "+") {
+                if (operator === "+") {
                     setMemory(memory + parseFloat(value))
 
-                } else if (operator == "–") {
+                } else if (operator === "–") {
                     setMemory(memory - parseFloat(value))
 
-                } else if (operator == "÷") {
+                } else if (operator === "÷") {
                     setMemory(memory / parseFloat(value))
 
-                } else if (operator == "×") {
+                } else if (operator === "×") {
                     setMemory(memory * parseFloat(value))
 
                 }
@@ -77,15 +93,15 @@ function App() {
         }
 
         // calculate/equals button
-        if (key == "=") {
+        if (key === "=") {
             if (!operator) return;
-            if (operator == "+") {
+            if (operator === "+") {
                 setValue((memory + parseFloat(value)).toString())
-            } else if (operator == "–") {
+            } else if (operator === "–") {
                 setValue((memory - parseFloat(value)).toString())
-            } else if (operator == "÷") {
+            } else if (operator === "÷") {
                 setValue((memory / parseFloat(value)).toString())
-            } else if (operator == "×") {
+            } else if (operator === "×") {
                 setValue((memory * parseFloat(value)).toString())
             }
             setMemory(null)
@@ -94,7 +110,7 @@ function App() {
         }
 
         // numbers
-        if (value == "0") {
+        if (value === "0") {
             setValue(key)
         } else {
             setValue(value + key)
@@ -115,8 +131,11 @@ function App() {
             </div>
             <div className="display">{commafy(value)}</div>
             <div className="buttons">
-                <Button name="AC" type="function" handleClick={handleClick} />
-                <Button name="±" type="function" handleClick={handleClick} />
+
+                <Button name={value == "0" ? "AC" : "C"} type="function" handleClick={handleClick} />
+
+
+                <Button name="+/–" type="function" handleClick={handleClick} />
                 <Button name="%" type="function" handleClick={handleClick} />
                 <Button name="÷" type="operator" handleClick={handleClick} />
                 <Button name="7" type="number" handleClick={handleClick} />
@@ -133,11 +152,11 @@ function App() {
                 <Button name="+" type="operator" handleClick={handleClick} />
                 <Button name="0" type="number" handleClick={handleClick} />
                 <Button name="." type="number" handleClick={handleClick} />
-                <Button name="=" type="equals" handleClick={handleClick} />
+                <Button name="=" type="operator" handleClick={handleClick} />
             </div>
             <div className="bottom"></div>
 
-        </div>)
+        </div >)
 }
 
 export default App
