@@ -14,12 +14,10 @@ function App() {
 
 
     useEffect(() => {
-        let newTime = new Date()
-        let newMins = newTime.getMinutes()
-        if (newMins !== time.getMinutes()) {
+        setInterval(() => {
             setTime(new Date())
-        }
-    })
+        }, 1000)
+    }, [])
 
 
     function handleClick(key) {
