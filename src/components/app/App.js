@@ -12,7 +12,7 @@ function App() {
     const [value, setValue] = useState("0")
     const [operator, setOperator] = useState(null)
 
-
+    // update time
     useEffect(() => {
         setInterval(() => {
             setTime(new Date())
@@ -116,6 +116,14 @@ function App() {
 
     }
 
+    // reduce font with more numbers
+    function getFontSize() {
+        if (value.length > 7) {
+            return "80px"
+        }
+        return "130px";
+    }
+    const fontSize = { fontSize: getFontSize() }
 
     return (
         <div className="App">
@@ -127,7 +135,7 @@ function App() {
                     <img src={icons} alt="" />
                 </div>
             </div>
-            <div className="display">{commafy(value)}</div>
+            <div className="display" style={fontSize}>{commafy(value)}</div>
             <div className="buttons">
 
                 <Button name={value == "0" ? "AC" : "C"} type="function" handleClick={handleClick} />
